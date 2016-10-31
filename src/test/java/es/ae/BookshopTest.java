@@ -10,7 +10,7 @@ import junit.framework.TestCase;
  */
 public class BookshopTest extends TestCase {
 
-    Bookshop app;
+    Bookshop bookshop;
 
     /**
      * @throws java.lang.Exception
@@ -18,7 +18,7 @@ public class BookshopTest extends TestCase {
     @Override
     @Before
     public void setUp() throws Exception {
-        app = new Bookshop();
+        bookshop = new Bookshop();
     }
 
     /**
@@ -26,15 +26,14 @@ public class BookshopTest extends TestCase {
      */
     @Test
     public void testBasics() {
-
-        assertEquals(0.0, app.price());
-        assertEquals(8.0, app.price(0));
-        assertEquals(8.0, app.price(1));
-        assertEquals(8.0, app.price(2));
-        assertEquals(8.0, app.price(3));
-        assertEquals(8.0, app.price(4));
-        assertEquals(8.0 * 2, app.price(0, 0));
-        assertEquals(8.0 * 3, app.price(1, 1, 1));
+        assertEquals(0.0, bookshop.price());
+        assertEquals(8.0, bookshop.price(0));
+        assertEquals(8.0, bookshop.price(1));
+        assertEquals(8.0, bookshop.price(2));
+        assertEquals(8.0, bookshop.price(3));
+        assertEquals(8.0, bookshop.price(4));
+        assertEquals(8.0 * 2, bookshop.price(0, 0));
+        assertEquals(8.0 * 3, bookshop.price(1, 1, 1));
     }
 
     /**
@@ -42,12 +41,20 @@ public class BookshopTest extends TestCase {
      */
     @Test
     public void testSimpleDiscounts() {
-
-        assertEquals(8 * 2 * 0.95, app.price(0, 1));
-        assertEquals(8 * 3 * 0.9, app.price(0, 2, 4));
-        assertEquals(8 * 4 * 0.8, app.price(0, 1, 2, 4));
-        assertEquals(8 * 5 * 0.75, app.price(0, 1, 2, 3, 4));
-
+        assertEquals(8 * 2 * 0.95, bookshop.price(0, 1));
+        assertEquals(8 * 3 * 0.9, bookshop.price(0, 2, 4));
+        assertEquals(8 * 4 * 0.8, bookshop.price(0, 1, 2, 4));
+        assertEquals(8 * 5 * 0.75, bookshop.price(0, 1, 2, 3, 4));
     }
 
+    /**
+     * Test Several Discounts for {@link es.ae.Bookshop#price(Integer...)}
+     */
+    @Test
+    public void testSeveralDiscounts() {
+        assertEquals(8 + (8 * 2 * 0.95), bookshop.price(0, 0, 1));
+        assertEquals(2 * (8 * 2 * 0.95), bookshop.price(0, 0, 1, 1));
+        assertEquals((8 * 4 * 0.8) + (8 * 2 * 0.95), bookshop.price(0, 0, 1, 2, 2, 3));
+        assertEquals(8 + (8 * 5 * 0.75), bookshop.price(0, 1, 1, 2, 3, 4));
+    }
 }
