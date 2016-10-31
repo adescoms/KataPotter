@@ -6,7 +6,7 @@ import org.junit.Test;
 import junit.framework.TestCase;
 
 /**
- * Unit test for simple App.
+ * Test for BookshopTest.
  */
 public class BookshopTest extends TestCase {
 
@@ -35,6 +35,19 @@ public class BookshopTest extends TestCase {
         assertEquals(8.0, app.price(4));
         assertEquals(8.0 * 2, app.price(0, 0));
         assertEquals(8.0 * 3, app.price(1, 1, 1));
+    }
+
+    /**
+     * Test simple Discounts for {@link es.ae.Bookshop#price(Integer...)}
+     */
+    @Test
+    public void testSimpleDiscounts() {
+
+        assertEquals(8 * 2 * 0.95, app.price(0, 1));
+        assertEquals(8 * 3 * 0.9, app.price(0, 2, 4));
+        assertEquals(8 * 4 * 0.8, app.price(0, 1, 2, 4));
+        assertEquals(8 * 5 * 0.75, app.price(0, 1, 2, 3, 4));
+
     }
 
 }
